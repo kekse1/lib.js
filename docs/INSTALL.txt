@@ -1,0 +1,37 @@
+See 'scripts/install.sh'. You surely want to install this system-wide
+by running w/ 'root' privileges - so everyone want to use your single
+installation. But for a completely local installation this script MAY
+be used, too.. but this feature is not really tested yet.
+
+The location where you unpacked the .tar archive (or do you even have
+Git access? ;) will be the base path. You can replace it by any newer
+archive (or `git pull`). I do *not* advise you to use different paths
+all the time; thus you'd need to `install.sh’ it sgain and again. ...
+
+`install.sh` creates /etc/profile.d/xyz.sh and /lib.js.
+
+Whereas 'xyz.sh' will get it's name by the base name of the directory
+you extracted the archive. So if this path is '~/lib/', the file will
+be '/etc/profile.d/lib.sh'.
+
+Now you can either 'require("/lib")', or just execute your scripts by
+calling `node.js $file` or directly as shebang in your scripts:
+
+	#!/usr/bin/env node.js
+
+Now you can also directly eval() script code via stdin pipeline, but
+then you either have an empty argv[] (or just arguments that are not
+to be declared as existing files) or '-' as the (path) argument. ;-)
+
+On Termux it's the same procedure, but you do *not* need superuser
+privileges here. That's also because your non-rooted Smartphone with
+Termux has everything down below /data/data/com.termux/files/{,usr}.
+
+If installed by a user without superuser privileges, currently there
+is '~/xyz.sh' (or '${base}.sh') with our new $PATH created, and then
+included/referenced in '~/.bash_profile'. And here's also no symlink
+'/lib.js'..
+
+Now you oviously need to re-login or simply call `. /etc/profile`..!
+
+Have phun! ... <kuchen@kekse.biz>.

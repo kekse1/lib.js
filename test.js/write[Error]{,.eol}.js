@@ -1,0 +1,1 @@
+process/write[Error]{,.eol}.js

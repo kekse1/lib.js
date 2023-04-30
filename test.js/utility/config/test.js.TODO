@@ -1,0 +1,9 @@
+#!/usr/bin/env node.js
+
+if(typeof config === 'undefined')
+{
+	require('utility/config');
+}
+
+const p = path.join(__dirname, 'example.conf');
+

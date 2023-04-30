@@ -1,0 +1,4 @@
+Hello World!
+Dies ist ein Test!
+Dieser Rest wird im Script abgeschnitten sein... also alles nach Byte/Offset +40! ;-)
+Letzte Zeile.. da ja auch './readline.js' getestet wird hiermit. ^_^

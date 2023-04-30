@@ -1,0 +1,37 @@
+#!/usr/bin/env node.js
+
+//
+const ADDRESS = 'https://www.google.com:443/';
+//const ADDRESS = 'http://www.google.com:80/';
+
+//
+const Client = require('net/client');
+const client = Client.create({ start: true }, ADDRESS);
+
+client.onready = function(_client, _server, _socket)
+{
+return console.dir(_client.toString());
+	const res = _client.writeString('GET / HTTP/1.1\r\nHost: www.google.com\r\n\r\n', (_length) => {
+		dir(_length, 'written bytes');
+	});
+
+	dir(res, 'res');
+}
+
+client.ondata = function(_client, _server, _socket, _chunk)
+{
+	_client.debug('ondata(%): % bytes..', arguments.length, _chunk.length);
+}
+
+client.onend = function(_client, _server, _socket)
+{
+	//process.exit();
+}
+
+process.stdio[0].on('data', (_chunk) => {
+	if(client.connected)
+	{
+		client.write(_chunk);
+	}
+});
+

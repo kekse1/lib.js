@@ -1,0 +1,1 @@
+startsWith+endsWith.js

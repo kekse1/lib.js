@@ -1,0 +1,7 @@
+#!/usr/bin/env node.js
+
+console.log('testing'.ansi('color.fg.4', 'random'));
+console.log('testing'.ansi('color.bg.4 random'));
+console.eol(2);
+console.log('testing'.ansi(ESC + '[1m' + NUL));
+

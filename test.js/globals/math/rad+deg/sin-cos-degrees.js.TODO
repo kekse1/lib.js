@@ -1,0 +1,20 @@
+#!/usr/bin/env node.js
+
+const degrees = 90;
+const radians = Math.deg2rad(degrees);
+
+const sin = Math.sin.deg(degrees);
+const cos = Math.cos.deg(degrees);
+
+const sinCmp = Math.sin(radians);
+const cosCmp = Math.cos(radians);
+
+//
+dir(radians, 'Math.deg2rad(' + degrees + ')');
+console.eol(3);
+dir(sin, 'Math.sin.deg(' + degrees + ')');
+dir(cos, 'Math.cos.deg(' + degrees + ')');
+console.eol(2);
+dir(sinCmp, 'Math.sin(' + radians + ')');
+dir(cosCmp, 'Math.cos(' + radians + ')');
+

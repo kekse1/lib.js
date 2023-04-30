@@ -1,0 +1,3 @@
+//js "Proxy" using..
+//perfectly in combination with own "BitView" (where index can be bigint for bits, integer for bytes (etc?) ;-)
+

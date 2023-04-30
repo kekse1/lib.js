@@ -1,0 +1,26 @@
+[
+
+	"ext/alphabet",
+	"ext/numeric",
+	"ext/string/",
+	"ext/utility",
+
+	"latest/",
+	"globals/",
+
+	"shared/",
+
+	"core/",
+
+	"node/",
+
+	"ext/",
+	"utility/",
+
+	"tty/",
+
+	"network/",
+
+	"version"
+
+]

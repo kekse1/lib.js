@@ -1,0 +1,7 @@
+#!/usr/bin/env node.js
+
+const bs = new STREAM();
+bs.writeData('abc');
+bs.writeBitData('1001');
+bs.info('(STREAM).info(...)');
+
