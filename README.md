@@ -13,7 +13,6 @@ There's a script for root and non-root installation (and additionally for
 environment variable to your `${PREFIX}/usr/bin/`, where the `node.js`
 file is linked.
 
-The `node.js` is the file for your script's 'Shebang's, or just to call
-it with either a script path or by passing your JavaScript code via a
-regular pipe! ^\_^
+The `node.js` is the file for your script's '[https://en.wikipedia.org/wiki/Shebang_(Unix)](Shebang)'s,
+or just to call it with either a script path or by passing your JavaScript code via a regular pipe! ^\_^
 
