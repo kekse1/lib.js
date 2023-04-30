@@ -1,7 +1,7 @@
 # lib.js / Library.js
 * https://libjs.de/
 
-The current version is visible in the '[version.json](https://raw.githubusercontent.com/kekse1/lib.js/git/version.json)'.
+The current version is available in the '[version.json](https://raw.githubusercontent.com/kekse1/lib.js/git/version.json)'.
 
 ## Library
 Everything (now only NON-browser) in the '**lib.js**/' directory.
