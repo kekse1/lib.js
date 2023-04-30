@@ -1,4 +1,4 @@
-# lib[rary].js
+# lib.js / Library.js
 * https://libjs.de/
 
 ## Library
