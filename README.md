@@ -5,7 +5,13 @@
 Everything (now only NON-browser) in the '**lib.js**/' directory.
 
 ### Test cases
-See the '**test.js**/' directory.
+See the '**test.js**/' directory, which is kinda 'documentation', where
+there's no 'real' documentation available [yet?]. Feel free to comment
+on your own - I'd be happy about some help! :)~
+
+#### Globals
+I also symlinked the 'lib.js/globals/' directory here in the repositories
+root, as they're something special.. and see the 'test.js/globals/', too.
 
 ### Installation
 There's a script for root and non-root installation (and additionally for
