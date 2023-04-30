@@ -1,6 +1,8 @@
 # lib.js / Library.js
 * https://libjs.de/
 
+The current version is visible in the `[./blob/git/version.json](version.json)`.
+
 ## Library
 Everything (now only NON-browser) in the '**lib.js**/' directory.
 
