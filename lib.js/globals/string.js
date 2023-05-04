@@ -10736,6 +10736,24 @@ throw new Error('TODO');
 	isString = String.isString;
 
 	//
+	Object.defineProperty(String.prototype, 'isEmpty', { get: function()
+	{
+		if(this.length === 0)
+		{
+			return true;
+		}
+		else for(var i = 0; i < this.length; ++i)
+		{
+			if(this.charCodeAt(i) >= 32)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}});
+
+	//
 
 })();
 
