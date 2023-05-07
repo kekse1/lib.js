@@ -1,17 +1,12 @@
 #!/usr/bin/env node.js
 
-const o1 = { abc: { def: 'DEF' } };
-const o2 = { abc: { def: 'def' } };
-const o3 = {};
+var array = [ [ [ [ 1 ], [ 2 ], [ 3 ], [ 4 ] ] ], [ [ 1, 2 ], [ [ [ 3, 4 ] ] ] ] ];
+const res0 = array.search(1, 1, 2, 3, 4);
+const res1 = array.search(null, 1, 2, 3, 4);
 
-const arr = [ o1, o2, o3 ];
-
-const res1 = arr.search('abc.def', 'def');
-const res2 = arr.search('abc.def', 'DEF', true);
-
-dir(arr, '(array)');
+dir(array, '(array)');
 console.eol(4);
-dir(res1, '(array).search("abc.def", "def")');
-console.eol();
-dir(res2, '(array).search("abc.def", "DEF", true)');
+dir(res0, '(array).search(1, 1, 2, 3, 4)');
+console.eol(2);
+dir(res1, '(array).search(null, 1, 2, 3, 4)');
 
