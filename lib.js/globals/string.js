@@ -9145,10 +9145,10 @@ throw new Error('TODO');
 		//
 		if(typeof options.array !== 'boolean')
 		{
-			options.array = false;
+			options.array = true;
 		}
 
-		vectorApply('array', true);
+		vectorApply('array', options.array);
 
 		//
 		if(Number.isInt(options.itemWidth) || String.isString(options.itemWidth))
@@ -9156,7 +9156,7 @@ throw new Error('TODO');
 			options.itemWidth = String.getWidth(options.itemWidth);
 		}
 
-		vectorApply('width', options.itemWidth, [ 'Number', 'String']);
+		vectorApply('width', options.itemWidth, [ 'Number', 'String' ]);
 
 		//
 		if(Number.isInt(options.prefix) && options.prefix >= 0)
@@ -9597,7 +9597,7 @@ throw new Error('TODO');
 		}
 
 		//
-		const maxLines = Math.longest(... vector);
+		const maxLines = Math.longest(vector);
 		const result = new Array(maxLines);
 
 		for(var i = 0; i < vector.length; ++i)
@@ -9608,7 +9608,7 @@ throw new Error('TODO');
 			}
 		}
 
-		const max = Math.longest(... vector);
+		const max = Math.longest(vector);
 		const fills = new Array(vector.length);
 		var va, fill, f;
 

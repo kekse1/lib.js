@@ -2637,10 +2637,7 @@
 				{
 					left = left.colorize();
 				}
-			}
 
-			if(left.length > 0)
-			{
 				result += EOL + String.align({ value: left, space: 0, width: leftWidth, fill: ' ', prefix: HELP_PREFIX, all: true }, { value: right, space: 2 }) + eol(2);
 			}
 			else
