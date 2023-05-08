@@ -293,7 +293,16 @@
 
 		Object.defineProperty(Date, 'GMT', { value: function(_date = new Date())
 		{
-			return (new Date().toGMT());
+			try
+			{
+				return _date.toGMT();
+			}
+			catch(_error)
+			{
+				throw new Error('Invalid _date argument');
+			}
+			
+			return null;
 		}});
 
 		//
@@ -666,7 +675,16 @@
 
 		Object.defineProperty(Date, 'format', { value: function(_format = DATE, _date = new Date())
 		{
-			return _date.format(_format);
+			try
+			{
+				return _date.format(_format);
+			}
+			catch(_error)
+			{
+				throw new Error('Invalid _date argument');
+			}
+			
+			return null;
 		}});
 
 		Date.format['D'] = function(_date = new Date())
@@ -1177,7 +1195,7 @@
 	{
 
 		//
-		const DEFAULT_FORMAT = ('DEFAULT' || 'BEST');
+		const DEFAULT_FORMAT = ('DEFAULT' || 'BEST'); // see also 'config.css' @ '--date'! :)~
 
 		//
 		function getDateFormat(_format = 'DEFAULT')
@@ -1276,10 +1294,6 @@
 				return _date.toGMT();
 			}
 		})();
-
-		//
-		best = date.best;
-		text = date.text;
 
 		//
 		
