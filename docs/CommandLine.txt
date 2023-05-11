@@ -1,1 +1,33 @@
-documents/CommandLine.txt
+Before `node.js` really executes any script,
+It'll check your command line (a rudimentary
+way.. before any 'utility/getopt' usage..)..
+
+The supported parameters are encoded in this
+`node.js` file, and they're:
+
+	# --lib-version / --library-version
+
+		ONLY prints out the current
+		Library.js version.
+
+	# --lib-config / --library-config
+
+		Should accept a path param,
+		override default config.js.
+
+	# --lib-trace / --library-trace
+
+		As I remember it should set
+		the 'Error.stackTraceLimit'
+		to Infinity.
+
+		Ya should be able to change
+		this value via CONFIG.TRACE
+		and so environment variable
+		'trace'.
+
+NOT available if you start your scripts via
+regular Node.js' `node` process (where this
+Library.js needs to be require()'d THEN and
+ONLY THEN).
+
