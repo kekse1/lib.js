@@ -2,7 +2,7 @@ module.exports = function _()
 {
 
 	//
-	Address = address = {};
+	Address = address = { punycode: require('network/punycode') };
 
 	//
 	if(typeof IP === 'undefined')
