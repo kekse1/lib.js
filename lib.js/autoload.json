@@ -8,6 +8,8 @@
 	"latest/",
 	"globals/",
 
+	"class/",
+
 	"shared/",
 
 	"core/",
