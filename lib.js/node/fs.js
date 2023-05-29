@@ -1886,38 +1886,47 @@ if(_mkdir)
 			return _options.truncate;
 		}});
 
+		const getEventObjectElements = (_error, _event = ev) => {
+			//
+			_event.buffer = buffer;
+			_event.bytes = result;
+			_event.count = chunks;
+			_event.error = _error;
+			_event.finish = (_error === null ? finish : null);
+			_event.ignoredChunks = ignored;
+			_event.rest = rest;
+			_event.size = min;
+			_event.stopped = STOP;
+			_event.written = written;
+
+			//
+			if(hasEncoding)
+			{
+				_event.string = String.fromUint8Array(buffer, _options.encoding);
+			}
+			else
+			{
+				_event.string = null;
+			}
+
+			//
+			if(_event.finish)
+			{
+				finishSent = true;
+			}
+
+			//
+			return _event;
+		};
+
 		const callback = (_error = null) => {
 			if(! _callback)
 			{
 				return;
 			}
-
-			//
-			ev.buffer = buffer;
-			ev.bytes = result;
-			ev.count = chunks;
-			ev.error = _error;
-			ev.finish = (_error === null ? finish : null);
-			ev.ignoredChunks = ignored;
-			ev.rest = rest;
-			ev.size = min;
-			ev.stopped = STOP;
-			ev.written = written;
-
-			//
-			if(hasEncoding)
-			{
-				ev.string = String.fromUint8Array(buffer, _options.encoding);
-			}
 			else
 			{
-				ev.string = null;
-			}
-
-			//
-			if(ev.finish)
-			{
-				finishSent = true;
+				getEventObjectElements(_error, ev);
 			}
 
 			//
@@ -2064,7 +2073,7 @@ if(_mkdir)
 
 		if(! finishSent && _callback)
 		{
-			_callback({ finish: true, stopped: STOP });
+			_callback(Object.assign(getEventObjectElements(null), { stopped: STOP }));
 		}
 
 		return result;
@@ -2533,38 +2542,47 @@ if(_mkdir)
 			return _options.truncate;
 		}});
 
+		const getEventObjectElements = (_error, _event = ev) => {
+			//
+			_event.buffer = buffer;
+			_event.bytes = result;
+			_event.count = chunks;
+			_event.error = _error;
+			_event.finish = (_error === null ? finish : null);
+			_event.ignoredChunks = ignored;
+			_event.rest = rest;
+			_event.size = min;
+			_event.stopped = STOP;
+			_event.written = written;
+			
+			//
+			if(hasEncoding)
+			{
+				_event.string = String.fromUint8Array(buffer, _options.encoding);
+			}
+			else
+			{
+				_event.string = null;
+			}
+
+			//
+			if(_event.finish)
+			{
+				finishSent = true;
+			}
+
+			//
+			return _event;
+		};
+
 		const callback = (_error = null) => {
 			if(! _callback)
 			{
 				return;
 			}
-
-			//
-			ev.buffer = buffer;
-			ev.bytes = result;
-			ev.count = chunks;
-			ev.error = _error;
-			ev.finish = (_error === null ? finish : null);
-			ev.ignoredChunks = ignored;
-			ev.rest = rest;
-			ev.size = min;
-			ev.stopped = STOP;
-			ev.written = written;
-			
-			//
-			if(hasEncoding)
-			{
-				ev.string = String.fromUint8Array(buffer, _options.encoding);
-			}
 			else
 			{
-				ev.string = null;
-			}
-
-			//
-			if(ev.finish)
-			{
-				finishSent = true;
+				getEventObjectElements(_error, ev);
 			}
 
 			//
@@ -2682,7 +2700,7 @@ if(_mkdir)
 
 		if(! finishSent && _callback)
 		{
-			_callback({ finish: true, stopped: STOP });
+			_callback(Object.assign(getEventObjectElements(null), { stopped: STOP }));
 		}
 
 		return result;
@@ -3064,46 +3082,55 @@ if(_mkdir)
 			return (_path_fd === handle ? null : _path_fd);
 		}});
 
+		const getEventObjectElements = (_error, _event = ev) => {
+			//
+			_event.buffer = buffer;
+			_event.bytes = result;
+			_event.count = chunks;
+			_event.error = _error;
+			_event.finish = (_error === null ? finish : null);
+			_event.ignoredChunks = ignored;
+			_event.read = read;
+			_event.rest = rest;
+			_event.size = min;
+			_event.stopped = STOP;
+			
+			//
+			if(hasEncoding)
+			{
+				_event.string = String.fromUint8Array(buffer, _options.encoding);
+			}
+			else
+			{
+				_event.string = null;
+			}
+
+			//
+			if(size < 1)
+			{
+				_event.finish = true;
+				finishSent = true;
+			}
+			else if(_event.finish)
+			{
+				finishSent = true;
+			}
+
+			//
+			return _event;
+		};
+		
 		const callback = (_error = null) => {
 			//
 			if(! _callback)
 			{
 				return;
 			}
-
-			//
-			ev.buffer = buffer;
-			ev.bytes = result;
-			ev.count = chunks;
-			ev.error = _error;
-			ev.finish = (_error === null ? finish : null);
-			ev.ignoredChunks = ignored;
-			ev.read = read;
-			ev.rest = rest;
-			ev.size = min;
-			ev.stopped = STOP;
-			
-			//
-			if(hasEncoding)
-			{
-				ev.string = String.fromUint8Array(buffer, _options.encoding);
-			}
 			else
 			{
-				ev.string = null;
+				getEventObjectElements(_error, ev);
 			}
-
-			//
-			if(size < 1)
-			{
-				ev.finish = true;
-				finishSent = true;
-			}
-			else if(ev.finish)
-			{
-				finishSent = true;
-			}
-
+			
 			//
 			return _callback(ev);
 		};
@@ -3205,7 +3232,7 @@ throw new Error('TODO (backwards)');
 
 		if(! finishSent && _callback)
 		{
-			_callback({ finish: true, stopped: STOP });
+			_callback(Object.assign(getEventObjectElements(null), { stopped: STOP }));
 		}
 
 		return result;
@@ -3654,38 +3681,47 @@ throw new Error('TODO (backwards)');
 			return _options.truncate;
 		}});
 
+		const getEventObjectElements = (_error = null, _event = ev) => {
+			//
+			_event.buffer = buffer;
+			_event.bytes = result;
+			_event.count = chunks;
+			_event.error = _error;
+			_event.finish = (_error === null ? finish : null);
+			_event.ignoredChunks = ignored;
+			_event.rest = rest;
+			_event.size = min;
+			_event.stopped = STOP;
+			_event.written = written;
+
+			//
+			if(hasEncoding)
+			{
+				_event.string = String.fromUint8Array(buffer, _options.encoding);
+			}
+			else
+			{
+				_event.string = null;
+			}
+
+			//
+			if(_event.finish)
+			{
+				finishSent = true;
+			}
+
+			//
+			return _event;
+		};
+		
 		const callback = (_error = null) => {
 			if(! _callback)
 			{
 				return;
 			}
-
-			//
-			ev.buffer = buffer;
-			ev.bytes = result;
-			ev.count = chunks;
-			ev.error = _error;
-			ev.finish = (_error === null ? finish : null);
-			ev.ignoredChunks = ignored;
-			ev.rest = rest;
-			ev.size = min;
-			ev.stopped = STOP;
-			ev.written = written;
-
-			//
-			if(hasEncoding)
-			{
-				ev.string = String.fromUint8Array(buffer, _options.encoding);
-			}
 			else
 			{
-				ev.string = null;
-			}
-
-			//
-			if(ev.finish)
-			{
-				finishSent = true;
+				getEventObjectElements(_error, ev);
 			}
 
 			//
@@ -3776,7 +3812,7 @@ throw new Error('TODO (backwards)');
 
 		if(! finishSent && _callback)
 		{
-			_callback({ finish: true, stopped: STOP });
+			_callback(Object.assign(getEventObjectElements(null), { stopped: STOP }));
 		}
 
 		return result;
@@ -4275,6 +4311,62 @@ throw new Error('TODO (backwards)');
 			return (_path_fd === handle ? null : _path_fd);
 		}});
 
+		const getEventObjectElements = (_error = null, _result, _from, _to, _event = ev) => {
+			//
+			if(hasEncoding)
+			{
+				line = line.encode(_options.encoding);
+			}
+			else
+			{
+				line = line.toUint8Array();
+			}					
+
+			//
+			_event.buffer = buffer.clone();
+			_event.bytes = bytes;
+			_event.count = chunks;
+			_event.countLines = result;
+			_event.endLine = (result + _options.startLine);
+			_event.eol = type;
+			_event.error = _error;
+			_event.finish = (_error === null ? finish : null);
+			_event.from = _from;
+			_event.ignoredChunks = ignoredChunks;
+			_event.ignoredLines = ignoredLines;
+			_event.limitOverflow = limitOverflow;
+			_event.line = line;
+			_event.read = read;
+			_event.rest = rest;
+			_event.size = min;
+			_event.stopped = STOP;
+			_event.to = _to;
+			
+			//
+			if(hasEncoding)
+			{
+				_event.string = String.fromUint8Array(buffer, _options.encoding);
+			}
+			else
+			{
+				_event.string = null;
+			}
+
+			//
+			if(size < 1)
+			{
+				_event.finish = true;
+				finishSent = true;
+			}
+			else if(_event.finish)
+			{
+				finishSent = true;
+			}
+			
+			//
+			return _event;
+		};
+		
 		const callback = (_error = null) => {
 			//
 			var from, to, started;
@@ -4322,55 +4414,7 @@ throw new Error('TODO (backwards)');
 			if(_callback && started)
 			{
 				//
-				if(hasEncoding)
-				{
-					line = line.encode(_options.encoding);
-				}
-				else
-				{
-					line = line.toUint8Array();
-				}					
-
-				//
-				ev.buffer = buffer.clone();
-				ev.bytes = bytes;
-				ev.count = chunks;
-				ev.countLines = result;
-				ev.endLine = (result + _options.startLine);
-				ev.eol = type;
-				ev.error = _error;
-				ev.finish = (_error === null ? finish : null);
-				ev.from = from;
-				ev.ignoredChunks = ignoredChunks;
-				ev.ignoredLines = ignoredLines;
-				ev.limitOverflow = limitOverflow;
-				ev.line = line;
-				ev.read = read;
-				ev.rest = rest;
-				ev.size = min;
-				ev.stopped = STOP;
-				ev.to = to;
-				
-				//
-				if(hasEncoding)
-				{
-					ev.string = String.fromUint8Array(buffer, _options.encoding);
-				}
-				else
-				{
-					ev.string = null;
-				}
-
-				//
-				if(size < 1)
-				{
-					ev.finish = true;
-					finishSent = true;
-				}
-				else if(ev.finish)
-				{
-					finishSent = true;
-				}
+				getEventObjectElements(_error, result, from, to, ev);
 
 				//
 				res = _callback(ev);
@@ -4641,7 +4685,7 @@ throw new Error('TODO (backwards)');
 
 		if(! finishSent && _callback)
 		{
-			_callback({ finish: true, stopped: STOP });
+			_callback(Object.assign(getEventObjectElements(null, result, undefined, undefined), { stopped: STOP }));
 		}
 
 		return result;
