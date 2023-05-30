@@ -3132,6 +3132,27 @@ zzzzzzzz
 
 		return ((_value * (_max - _min)) + _min);
 	}
+
+	//
+	Math.px2pt = function(_px)
+	{
+		if(! isNumber(_px))
+		{
+			return x('Invalid % argument (not a %)', null, '_px', 'Number');
+		}
+
+		return (_px / 0.75);
+	}
+
+	Math.pt2px = function(_pt)
+	{
+		if(! isNumber(_pt))
+		{
+			return x('Invalid % argument (not a %)', null, '_pt', 'Number');
+		}
+
+		return (_pt * 0.75);
+	}
 	
 	//
 
