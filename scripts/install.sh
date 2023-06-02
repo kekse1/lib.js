@@ -10,7 +10,9 @@ base="$(basename "$base")"
 
 #
 toGrep="export PATH=\"$bin:"
-grep "$toGrep" /etc/profile.d/*.sh >/dev/null 2>&1
+p=""
+[[ -d "/data/data/com.termux/" ]] && p="/data/data/com.termux/files/usr"
+grep "$toGrep" $p/etc/profile.d/*.sh >/dev/null 2>&1
 testRootInstall=$?
 grep "$toGrep" $HOME/*.sh >/dev/null 2>&1
 testUserInstall=$?
