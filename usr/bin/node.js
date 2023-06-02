@@ -1,1 +1,1 @@
-../../lib.js/main.js
+../../lib.js/node.js
