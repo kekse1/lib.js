@@ -1,4 +1,4 @@
-<img src="https://kekse.biz/php/count.php?draw&override=github:lib.js&fg=120,130,40&size=48" />
+<img src="https://kekse.biz/php/count.php?draw&override=github:lib.js&fg=120,130,40&size=48&v=16" />
 
 # lib.js / Library.js
 * https://libjs.de/
