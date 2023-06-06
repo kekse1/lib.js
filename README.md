@@ -19,7 +19,7 @@ root, as they're something special.. and see the 'test.js/globals/', too.
 
 ### Installation
 There's a script for root and non-root installation (and additionally for
-[https://termux.dev/](Termux)), which is just extending the `${PATH}`
+[Termux](https://termux.dev/)), which is just extending the `${PATH}`
 environment variable to your `${PREFIX}/usr/bin/`, where the `node.js`
 file is linked.
 
