@@ -31,7 +31,9 @@ or just to call it with either a script path or by passing your JavaScript code 
 
 The script knows if you already installed it.. and please mention that there'll be no prompt or so,
 it'll directly install after running the script.. but there are no real copies or so, it just changes
-the `$PATH`, as I already said, **only by creating `/etc/profile.d/(base).sh`**.. ;)~
+the `$PATH`, as I already said, **only by creating `/etc/profile.d/(base).sh`** ('base' is the base
+directory where you copy this library to; regularily (so in the '.tar' archive @ [libjs.de](https://libjs.de/)
+) it's `xyz`).. ;)~
 
 ### Favorites
 My favorite code in this library are the [`getopt`](lib.js/utility/getopt.js) and the
