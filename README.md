@@ -19,7 +19,7 @@ See the `test.js/` directory, which is kinda 'documentation'.
 
 There's no 'real' documentation available yet.. and yes, I know that it's totally bad, but I'm spending my time
 rather in the code itself but it's documentation. Another reason is that the code could change in this phase,
-so I'm commenting it rather l8rs.. eh? ^\_^
+so I'm rather commenting it l8rs.. eh? ^\_^
 
 ### Installation
 There's a script for root and non-root installation (and additionally for
