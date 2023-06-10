@@ -15,8 +15,11 @@ _Hint_: if you don't want to use this library, see it at least as a provider for
 some nice mathematical functions, e.g.. etc.
 
 ### Test cases
-See the `test.js/` directory, which is kinda 'documentation'. There's no 'real'
-documentation available [yet?].
+See the `test.js/` directory, which is kinda 'documentation'.
+
+There's no 'real' documentation available yet.. and yes, I know that it's totally bad, but I'm spending my time
+rather in the code itself but it's documentation. Another reason is that the code could change in this phase,
+so I'm commenting it rather l8rs.. eh? ^\_^
 
 ### Installation
 There's a script for root and non-root installation (and additionally for
