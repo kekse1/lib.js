@@ -33,6 +33,18 @@ The script knows if you already installed it.. and please mention that there'll 
 it'll directly install after running the script.. but there are no real copies or so, it just changes
 the `$PATH`, as I already said, **only by creating `/etc/profile.d/(base).sh`**.. ;)~
 
+### Favorites
+My favorite code in this library are the [`getopt`](lib.js/utility/getopt.js) and the
+[`ansi`](lib.js/tty/ansi.js) modules. **INTER ALIA**.. so not to mention the other code here,
+it's great as well! ^\_^
+
+JavaScript's based on this library can so **really easily** be extended with colors (and other ANSI
+escape sequences), while with the `getopt` it's also very easy to use the argument vector.. and, the
+[`tty/raw`](lib.js/tty/raw/) module is also useful; for designing, but also for (raw) key  and mouse
+usage in the console.
+
+**TODO**: also this `README.md` will be extended l8rs..
+
 ### Globals
 They're something 'special' in the way that they're extending the most global objects, etc.
 Here's a quick overview over them:
