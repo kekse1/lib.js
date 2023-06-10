@@ -38,9 +38,9 @@ directory where you copy this library to; regularily (so in the '.tar' archive @
 ### Favorites
 My favorite code in this library are the [`getopt`](lib.js/utility/getopt.js) and the
 [`ansi`](lib.js/tty/ansi.js) modules. **INTER ALIA**.. so not to mention the other code here,
-it's great as well! ^\_^
+which is great as well! ^\_^
 
-JavaScript's based on this library can so **really easily** be extended with colors (and other ANSI
+JavaScript's based on this library can so **really easy** be extended with colors (and other ANSI
 escape sequences), while with the `getopt` it's also very easy to use the argument vector.. and, the
 [`tty/raw`](lib.js/tty/raw/) module is also useful; for designing, but also for (raw) key  and mouse
 usage in the console.
