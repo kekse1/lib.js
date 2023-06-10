@@ -26,30 +26,33 @@ environment variable to your `${PREFIX}/usr/bin/`, where the `node.js` is linked
 The `node.js` is the file for your script's '[Shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)]'s,
 or just to call it with either a script path or by passing your JavaScript code via a regular pipe!
 
-### Globals
-I also symlinked the `lib.js/globals/` directory here in the repositories root,
-as they're something special. And also take a look at the `test.js/globals/`
-directory, where those globals are tested very well.
+The script knows if you already installed it.. and please mention that there'll be no prompt or so,
+it'll directly install after running the script.. but there are no real copies or so, it just changes
+the `$PATH`, as I already said. ;)~
 
-* [Arguments](globals/arguments.js)
-* [Array](globals/array.js)
-* [BigInt](globals/bigint.js)
-* [Boolean](globals/boolean.js)
-* [DataView](globals/dataview.js)
-* [Date](globals/date.js)
-* [Error](globals/error.js)
-* [Function](globals/function.js)
-* [Map](globals/map.js)
-* [Math](globals/math.js)
-* [Number](globals/number.js)
-* [Object](globals/object.js)
-* [Proxy](globals/proxy.js)
-* [Reflect](globals/reflect.js)
-* [RegExp](globals/regexp.js)
-* [Set](globals/set.js)
-* [String](globals/string.js)
-* [TypedArray](globals/typedarray.js)
-* [UInt8Array](globals/uint8array.js)
+### Globals
+They're something 'special' in the way that they're extending the most global objects, etc.
+Here's a quick overview over them:
+
+* [Arguments](lib.js/globals/arguments.js)
+* [Array](lib.js/globals/array.js)
+* [BigInt](lib.js/globals/bigint.js)
+* [Boolean](lib.js/globals/boolean.js)
+* [DataView](lib.js/globals/dataview.js)
+* [Date](lib.js/globals/date.js)
+* [Error](lib.js/globals/error.js)
+* [Function](lib.js/globals/function.js)
+* [Map](lib.js/globals/map.js)
+* [Math](lib.js/globals/math.js)
+* [Number](lib.js/globals/number.js)
+* [Object](lib.js/globals/object.js)
+* [Proxy](lib.js/globals/proxy.js)
+* [Reflect](lib.js/globals/reflect.js)
+* [RegExp](lib.js/globals/regexp.js)
+* [Set](lib.js/globals/set.js)
+* [String](lib.js/globals/string.js)
+* [TypedArray](lib.js/globals/typedarray.js)
+* [UInt8Array](lib.js/globals/uint8array.js)
 
 ## Copyright and License
 The Copyright is [(c) Sebastian Kucharczyk](./COPYRIGHT.txt),
