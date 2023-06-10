@@ -23,7 +23,7 @@ There's a script for root and non-root installation (and additionally for
 [Termux Linux](https://termux.dev/)), which is just extending the `${PATH}`
 environment variable to your `${PREFIX}/usr/bin/`, where the `node.js` is linked.
 
-The `node.js` is the file for your script's '[Shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)]'s,
+The `node.js` is the file for your script's '[Shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))'s,
 or just to call it with either a script path or by passing your JavaScript code via a regular pipe!
 
 The script knows if you already installed it.. and please mention that there'll be no prompt or so,
