@@ -41,9 +41,9 @@ My favorite code in this library are the [`getopt`](lib.js/utility/getopt.js) an
 which is great as well! ^\_^
 
 JavaScript's based on this library can so **really easy** be extended with colors (and other ANSI
-escape sequences), while with the `getopt` it's also very easy to use the argument vector.. and, the
-[`tty/raw`](lib.js/tty/raw/) module is also useful; for designing, but also for (raw) key  and mouse
-usage in the console.
+escape sequences), while with `getopt` it's also very easy to use the argument vector.. and also the
+[`tty/raw`](lib.js/tty/raw/) module is very useful; for designing, but also for (raw) key and mouse
+handling in the console.. etc.
 
 **TODO**: also this `README.md` will be extended l8rs..
 
