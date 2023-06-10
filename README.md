@@ -31,7 +31,7 @@ or just to call it with either a script path or by passing your JavaScript code 
 
 The script knows if you already installed it.. and please mention that there'll be no prompt or so,
 it'll directly install after running the script.. but there are no real copies or so, it just changes
-the `$PATH`, as I already said. ;)~
+the `$PATH`, as I already said, **only by creating `/etc/profile.d/(base).sh`**.. ;)~
 
 ### Globals
 They're something 'special' in the way that they're extending the most global objects, etc.
