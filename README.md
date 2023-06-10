@@ -2,7 +2,7 @@
 
 # lib.js / Library.js
 The official website is [libjs.de](https://libjs.de/).
-The current version is visible in the [`version.json`](version.json).
+The current version can be seen in the [`version.json`](version.json).
 
 ## Library
 Everything (now only NON-browser) in the `lib.js/` directory.
