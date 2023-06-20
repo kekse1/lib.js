@@ -8,8 +8,8 @@
 {
 
 	//
-	const DEFAULT_DISABLE_WITHOUT_ANSI = false;
 	const DEFAULT_THROW = true;
+	const DEFAULT_DISABLE_ANSI = false;
 	const DEFAULT_CURSOR_CALLBACK = true;
 	const DEFAULT_CURSOR_STACK_MAX_LENGTH = 50;
 	const DEFAULT_CURSOR_STACK_CALLBACK_WITH_TIMEOUT = true;
@@ -57,7 +57,7 @@
 	ansi = module.exports = function(_escape, _input, _stream = null, _end = null, _inject = INJECT, _eol = EOL)
 	{
 		//
-		const noAnsi = (DEFAULT_DISABLE_WITHOUT_ANSI && !COLORS);
+		const noAnsi = (DEFAULT_DISABLE_ANSI || !COLORS);
 
 		//
 		if((_input = filterInput(_input)) === null)
