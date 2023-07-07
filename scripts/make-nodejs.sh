@@ -7,8 +7,7 @@
 #
 
 #
-#DEPENDS="binutils libc++, openssl, c-ares, libicu, zlib"
-#SUGGESTS="clang, make, pkg-config, python"
+#DEPENDS="binutils libc++ openssl c-ares libicu zlib libuv clang make pkg-config python"
 
 #
 #only used for termux build..
