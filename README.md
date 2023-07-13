@@ -1,6 +1,4 @@
 <img src="https://kekse.biz/php/count.php?draw&override=github:lib.js&text=`lib[rary].js`" />
-
-# lib.js / Library.js
 The official website is [libjs.de](https://libjs.de/).
 The current version can be seen in the [`version.json`](version.json).
 
