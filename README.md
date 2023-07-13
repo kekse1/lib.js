@@ -1,4 +1,4 @@
-<img src="https://kekse.biz/php/count.php?draw&override=github:lib.js&text=kuchen@kekse.biz&font=SourceCodePro" />
+<img src="https://kekse.biz/php/count.php?draw&override=github:lib.js&text=kuchen@kekse.biz&font=IntelOneMono" />
 
 # lib.js / Library.js
 The official website is [libjs.de](https://libjs.de/).
