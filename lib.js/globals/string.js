@@ -71,6 +71,9 @@
 
 	const DEFAULT_COUNT_ONCE = false;
 
+	const DEFAULT_COMPLEX = false;
+	const DEFAULT_ADAPT_LENGTH_PAD = true;
+
 	//
 	Object.defineProperty(String.prototype, 'isUpperCase', { get: function()
 	{
@@ -6863,7 +6866,7 @@ throw new Error('TODO');
 	// positive _length => '(pad)(string)'
 	// negative _length => '(string)(pad)'
 	//
-	Object.defineProperty(String.prototype, 'pad', { value: function(_length, _pad = DEFAULT_PAD, _complex = false)
+	Object.defineProperty(String.prototype, 'pad', { value: function(_length, _pad = DEFAULT_PAD, _complex = DEFAULT_COMPLEX)
 	{
 		//
 		if(Number.isNumber(_length))
@@ -10751,6 +10754,119 @@ throw new Error('TODO');
 		}
 
 		return true;
+	}});
+
+	//
+	Object.defineProperty(String.prototype, 'adaptLength', { value: function(_max = console.width, _pad = DEFAULT_ADAPT_LENGTH_PAD, _complex = DEFAULT_COMPLEX, _pad_string = DEFAULT_PAD, _prefix = '', _suffix = '')
+	{
+		if(Number.isNumber(_max))
+		{
+			if((_max = Math.abs(Math.int(_max))) === 0)
+			{
+				return x('Invalid % argument (may not be zero)', null, '_pad');
+			}
+		}
+		else
+		{
+			return x('Invalid % argument (not a %)', null, '_pad', 'Number');
+		}
+
+		if(typeof _prefix !== 'string')
+		{
+			_prefix = '';
+		}
+
+		if(typeof _suffix !== 'string')
+		{
+			_suffix = '';
+		}
+		
+		if(Number.isNumber(_pad))
+		{
+			_pad = Math.abs(Math.int(_pad));
+		}
+		else if(typeof _pad !== 'boolean')
+		{
+			_pad = DEFAULT_ADAPT_LENGTH_PAD;
+		}
+
+		const result = [];
+
+		if(this.length === 0)
+		{
+			result[0] = '';
+			return result;
+		}
+
+		const startLen = (_complex ? (_suffix + _prefix).textLength : (_suffix + _prefix).length);
+
+		if(typeof _pad === 'number')
+		{
+			_pad -= startLen;
+		}
+		else if(typeof _pad === 'boolean')
+		{
+			_pad = (_pad ? -_max : 0);
+		}
+
+		_max += startLen;
+
+		var len = startLen;
+		var sub = '';
+		var open = false;
+
+		for(var i = 0, j = 0; i < this.length; ++i)
+		{
+			if(open)
+			{
+				sub += this[i];
+
+				if(this[i] === NUL)
+				{
+					open = false;
+				}
+			}
+			else if(_complex && this[i] === ESC)
+			{
+				sub += this[i];
+				open = true;
+			}
+			else
+			{
+				sub += this[i];
+
+				if(++len >= _max)
+				{
+					result[j++] = sub;
+					sub = '';
+					len = startLen;
+				}
+			}
+		}
+
+		if(len > 0)
+		{
+			if(sub.textLength === 0)
+			{
+				result[result.length - 1] += sub;
+			}
+			else
+			{
+				result.push(sub);
+			}
+		}
+
+		if(_pad !== 0) for(var i = 0; i < result.length; ++i)
+		{
+			result[i] = result[i].pad(_pad, _pad_string, _complex);
+		}
+
+		if(_prefix.length > 0 || _suffix.length > 0) for(var i = 0; i < result.length; ++i)
+		{
+			result[i] = _prefix + result[i] + _suffix;
+		}
+
+		return result;
 	}});
 
 	//

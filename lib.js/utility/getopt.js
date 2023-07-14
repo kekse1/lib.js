@@ -2446,6 +2446,9 @@
 		{
 			_throw = true;
 		}
+		
+		//
+		const textPrefix = '  >>  ';
 
 		//
 		const maxLength = { long: 0, short: 0, env: 0 };
@@ -2473,8 +2476,7 @@
 		var help, nul, undef, def, s, idx;
 		const sub = new Array(index.length);
 		var left, right;
-		const consoleWidth = console.width;
-		var leftWidth = Math.floor(consoleWidth / 0.6);
+		var ml = 0;
 
 		for(var i = 0; i < index.length; ++i)
 		{
@@ -2514,14 +2516,43 @@
 			}
 
 			//
-			sub[i] = s;
+			ml = Math._max(ml, (sub[i] = s).textLength);
 		}
 
 		for(var i = 0; i < index.length; ++i)
 		{
-			//
-			leftWidth = Math._min(leftWidth, sub[i].textLength + 8);
+			const idx = index[i];
+			var h;
 
+			if(String.isString(_event.vector[idx].help))
+			{
+				h = _event.vector[idx].help;
+			}
+			else if(Array.isArray(_event.vector[idx].help, false))
+			{
+				h = String.printf(... _event.vector[idx].help);
+			}
+			else
+			{
+				h = '';
+			}
+			
+			ml = Math._max(ml, (_event.vector[idx].HELP = h).textLength);
+		}
+
+		var leftWidth = Math.round(console.width / 2);
+		
+		if(ml < leftWidth)
+		{
+			leftWidth = ml;
+		}
+		
+		const leftAdd = 10;
+		const fill = (leftWidth + leftAdd);
+		const rightWidth = (console.width - fill);
+
+		for(var i = 0; i < index.length; ++i)
+		{
 			//
 			idx = index[i];
 
@@ -2531,105 +2562,68 @@
 			//
 			if(_event.vector[idx].group)
 			{
-				right = _event.vector[idx].group.colorizeAs('String').quote().toText({ prefix: '    (' + 'Group'.bold + ') ', all: false });
+				right = _event.vector[idx].group.colorizeAs('String').quote().toText({ prefix: '    (' + 'Group'.bold + ') ', all: false, width: rightWidth });
 			}
 			else
 			{
 				right = '';
 			}
 
-			if(('null' in _event.vector[idx]) || ('undefined' in _event.vector[idx]))
+			if(_event.vector[idx].args > 0 || right.length > 0)
 			{
-				//
-				var nulIsArray = false;
-				var undefIsArray = false;
-
-				//
-				if('null' in _event.vector[idx])
+				if(('null' in _event.vector[idx]) || ('undefined' in _event.vector[idx]))
 				{
-					nul = _event.vector[idx].null;
-
-					if(Array.isArray(nul, true))
+					//
+					var nul, undef;
+					
+					if('null' in _event.vector[idx])
 					{
-						nul = nul.toString(DEFAULT_CALL_HELP_ARRAY_DEPTH, true, DEFAULT_CALL_HELP_ARRAY_INDEX, true);
-						nulIsArray = true;
-					}
-					else
-					{
-						nul = String.render(nul, { quote: true, colors: true, escape: DEFAULT_ESCAPE });
-					}
-				}
-				else
-				{
-					nul = '';
-				}
-
-				if('undefined' in _event.vector[idx])
-				{
-					undef = _event.vector[idx].undefined;
-
-					if(Array.isArray(undef, true))
-					{
-						undef = undef.toString(DEFAULT_CALL_HELP_ARRAY_DEPTH, true, DEFAULT_CALL_HELP_ARRAY_INDEX, true);
-						undefIsArray = true;
-					}
-					else
-					{
-						undef = String.render(undef, { quote: true, colors: true, escape: DEFAULT_ESCAPE });
-					}
-				}
-				else
-				{
-					undef = '';
-				}
-
-				//
-				if(nul.length > 0 || undef.length > 0)
-				{
-					if(right.length > 0)
-					{
-						right += EOL;
-					}
-
-					if(nul === undef)
-					{
-						right += nul.toText({ prefix: '  (' + 'default' + ') ', all: false, morePrefix: ((nulIsArray || undefIsArray) ? 2 : 0) });
-					}
-					else
-					{
-						def = '';
-
-						if(undef.length > 0)
+						if(Array.isArray(_event.vector[idx].null, true))
 						{
-							right += undef.toText({ prefix: '(' + 'undefined' + ') ', all: false, morePrefix: (undefIsArray ? 2 : 0) });
-
-							if(nul.length > 0)
-							{
-								right += EOL;
-							}
+							nul = _event.vector[idx].null.toString(DEFAULT_CALL_HELP_ARRAY_DEPTH, true, DEFAULT_CALL_HELP_ARRAY_INDEX, true);
 						}
-
-						if(nul.length > 0)
+						else
 						{
-							right += nul.toText({ prefix: '     (' + 'null' + ') ', all: false, morePrefix: (nulIsArray ? 2 : 0) });
+							nul = String.render(_event.vector[idx].null, { quote: true, colors: true, escape: DEFAULT_ESCAPE });
 						}
 					}
+					else
+					{
+						nul = '';
+					}
+
+					if('undefined' in _event.vector[idx])
+					{
+						if(Array.isArray(_event.vector[idx].undefined, true))
+						{
+							undef = _event.vector[idx].undefined.toString(DEFAULT_CALL_HELP_ARRAY_DEPTH, true, DEFAULT_CALL_HELP_ARRAY_INDEX, true);
+						}
+						else
+						{
+							undef = String.render(_event.vector[idx].undefined, { quote: true, colors: true, escape: DEFAULT_ESCAPE });
+						}
+					}
+					else
+					{
+						undef = '';
+					}
+					
+					if(nul.length > 0)
+					{
+						nul = nul.toText({ prefix: '   (default) ', all: false, width: rightWidth });
+					}
+					
+					if(undef.length > 0)
+					{
+						undef = undef.toText({ prefix: ' (undefined) ', all: false, width: rightWidth });
+					}
+					
+					right += (right.length === 0 ? '' : EOL) + nul + EOL + undef;
 				}
 			}
 
 			//
-			if(String.isString(_event.vector[idx].help))
-			{
-				left = _event.vector[idx].help + EOL;
-			}
-			else if(Array.isArray(_event.vector[idx].help, false))
-			{
-				left = String.printf(... _event.vector[idx].help) + EOL;
-			}
-			else
-			{
-				left = '';
-			}
+			left = _event.vector[idx].HELP;
 
 			if(left.length > 0)
 			{
@@ -2637,12 +2631,56 @@
 				{
 					left = left.colorize();
 				}
-
-				result += EOL + String.align({ value: left, space: 0, width: leftWidth, fill: ' ', prefix: HELP_PREFIX, all: true }, { value: right, space: 2 }) + eol(2);
+				
+				left = left.adaptLength(leftWidth, true, true, ' ', textPrefix);
 			}
 			else
 			{
-				result += String.align(leftWidth + 2, { value: right }) + EOL;
+				left = [];
+			}
+			
+			if(right.length > 0)
+			{
+				right = right.split(EOL);
+			}
+			else
+			{
+				right = [];
+			}
+
+			if(left.length > 0 || right.length > 0)
+			{
+				var maxLines = Math._max(left.length, right.length);
+
+				for(var j = 0; j < maxLines; ++j)
+				{
+					var string = '';
+
+					if(j < left.length)
+					{
+						string += left[j].pad(-fill, ' ', true);
+					}
+					else
+					{
+						string += String.fill(fill, ' ');
+					}
+
+					if(j < right.length)
+					{
+						string += right[j];
+					}
+
+					result += EOL + string;
+				}
+			}
+			
+			if(_event.vector[idx].HELP.length > 0)
+			{
+				result += eol(2);
+			}
+			else
+			{
+				result += EOL;
 			}
 		}
 

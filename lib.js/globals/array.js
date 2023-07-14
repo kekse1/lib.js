@@ -25,6 +25,9 @@
 	const DEFAULT_ISARRAY_TYPED = true;
 	const DEFAULT_ISARRAY_CLASS = false;
 
+	const DEFAULT_PAD = ' ';
+	const DEFAULT_COMPLEX = false;
+
 	//
 	Object.defineProperty(Array, 'isArrayClass', { value: function(_item, _typed = true)
 	{
@@ -4004,6 +4007,94 @@ const SORT = false;
 		};
 
 		return traverse(this);
+	}});
+
+	//
+	Object.defineProperty(Array.prototype, 'pad', { value: function(_length, _pad = DEFAULT_PAD, _complex = DEFAULT_COMPLEX)
+	{
+		if(this.length === 0)
+		{
+			return this;
+		}
+		else if(! String.isString(_pad))
+		{
+			return x('Invalid % argument (no non-empty %)', null, '_pad', 'String');
+		}
+		else if(! Number.isNumber(_length))
+		{
+			return x('Invalid % argument (not a %)', null, '_length', 'Number');
+		}
+		else
+		{
+			_length = _length.int;
+		}
+
+		for(var i = 0; i < this.length; ++i)
+		{
+			if(typeof this[i] !== 'string')
+			{
+				return x('Invalid line[%] (not a %)', null, i, 'String');
+			}
+		}
+
+		for(var i = 0; i < this.length; ++i)
+		{
+			this[i] = this[i].pad(_length, _pad, _complex);
+		}
+
+		return this;
+	}});
+
+	Object.defineProperty(Array.prototype, 'prefix', { value: function(_prefix)
+	{
+		if(this.length === 0)
+		{
+			return this;
+		}
+		else if(typeof _prefix !== 'string')
+		{
+			return x('Invalid % argument (no %)', null, '_prefix', 'String');
+		}
+		else for(var i = 0; i < this.length; ++i)
+		{
+			if(typeof this[i] !== 'string')
+			{
+				return x('Invalid this[%] (not a %)', null, i, 'String');
+			}
+		}
+		
+		for(var i = 0; i < this.length; ++i)
+		{
+			this[i] = _prefix + this[i];
+		}
+
+		return this;
+	}});
+
+	Object.defineProperty(Array.prototype, 'suffix', { value: function(_suffix)
+	{
+		if(this.length === 0)
+		{
+			return this;
+		}
+		else if(typeof _suffix !== 'string')
+		{
+			return x('Invalid % argument (no %)', null, '_suffix', 'String');
+		}
+		else for(var i = 0; i < this.length; ++i)
+		{
+			if(typeof this[i] !== 'string')
+			{
+				return x('Invalid this[%] (not a %)', null, i, 'String');
+			}
+		}
+
+		for(var i = 0; i < this.length; ++i)
+		{
+			this[i] += _suffix;
+		}
+
+		return this;
 	}});
 
 	//
