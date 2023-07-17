@@ -2727,7 +2727,25 @@
 			process.stdin.off('data', callback);
 			process.stdin.setRawMode(origRawMode);
 			process.stdin.pause();
-			process.stdout.write(EOL);
+
+			var res;
+
+			if(_result === true)
+			{
+				res = ansi.color.green.bg(ansi.color.white.bright.fg('YES'));
+			}
+			else if(_result === false)
+			{
+				res = ansi.color.red.bg(ansi.color.white.bright.fg('NO'));
+			}
+			else
+			{
+				res = ansi.color.blue.bg(ansi.color.white.bright.fg('n/A'));
+			}
+
+			res = '[' + ansi.style.bold(res) + ']';
+
+			process.stdout.write(res + EOL);
 			return _callback(_result, _break);
 		};
 
