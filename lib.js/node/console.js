@@ -2574,12 +2574,12 @@
 
 		if(typeof _options.prefix !== 'string')
 		{
-			_options.prefix = ansi.style.bold(ansi.color(COLOR_STDIN, false, (_options.eol ? PREFIX_STDOUT : PREFIX_STDIN)));
+			_options.prefix = ansi.style.bold(ansi.color(COLOR_IN, false, (_options.eol ? PREFIX_OUT : PREFIX_IN)));
 		}
 		
 		if(typeof _options.prompt !== 'string')
 		{
-			_options.prompt = ansi.style.bold(ansi.color(COLOR_STDIN, false, PREFIX_STDIN));
+			_options.prompt = ansi.style.bold(ansi.color(COLOR_IN, false, PREFIX_IN));
 		}
 
 		if(! (isInt(_options.length) && _options.length > 0))
@@ -2712,7 +2712,7 @@
 		}
 
 		var string = String.printf(_format, ... _printf);
-		const prefix = ansi.style.bold(ansi.color(COLOR_STDIN, false, PREFIX_STDIN));
+		const prefix = ansi.style.bold(ansi.color(COLOR_IN, false, PREFIX_IN));
 
 		if(string.length === 0)
 		{

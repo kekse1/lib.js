@@ -106,8 +106,8 @@
 	CONFIG.BASE = 1024;
 	CONFIG.TABS = 4;
 	CONFIG.LINE = ",.-'`'-.,";//'/';//'=';
-	CONFIG.PREFIX_STDIN = ' << ';
-	CONFIG.PREFIX_STDOUT = ' >> ';
+	CONFIG.PREFIX_IN = ' << ';
+	CONFIG.PREFIX_OUT = ' >> ';
 	CONFIG.PREFIX_LOG = ' >> ';
 	CONFIG.PREFIX_INFO = ' >> ';
 	CONFIG.PREFIX_WARN = ' >> ';
@@ -120,7 +120,7 @@
 	CONFIG.CZ = false;
 	CONFIG.CZ_G = [ 255, 136 ];
 	CONFIG.CZ_LOG = true;
-	CONFIG.COLOR_STDIN = '#d4c524';
+	CONFIG.COLOR_IN = '#d4c524';
 	CONFIG.COLOR_STDOUT = false;
 	CONFIG.COLOR_STDERR = 'error';
 	CONFIG.COLOR_HIGH = '#ffeb0a';
