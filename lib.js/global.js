@@ -1006,7 +1006,7 @@
 			//
 			const keyUpper = idx.toUpperCase();
 			const keyLower = idx.toLowerCase();
-			
+
 			//
 			if(keyUpper in global)
 			{

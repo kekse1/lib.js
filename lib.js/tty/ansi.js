@@ -595,6 +595,9 @@ console.eol(3);
 			{
 				case 'high':
 					return !!COLOR_HIGH;
+				case 'stdin':
+				case 'in':
+					return !!COLOR_STDIN;
 				case 'log':
 					return !!COLOR_LOG;
 				case 'info':
@@ -3859,6 +3862,13 @@ throw new Error('TODO (geht das ueberhaupt?!??)');
 	//
 	ansi.stream = {};
 
+	ansi.stream.in = ansi.stream.stdin = ansi.in = ansi.stdin = function(_string, _stream = null, _end = true, _inject = INJECT)
+	{
+		return ansi.color(COLOR_STDIN, false, _string, _stream, _end, _inject);
+	}
+
+	//TODO/.bg, etc.?!? hm... TODO!
+
 	ansi.stream.log = ansi.log = function(_string, _stream = null, _end = true, _inject = INJECT)
 	{
 		return ansi.color(COLOR_LOG, false, _string, _stream, _end, _inject);
@@ -4278,6 +4288,10 @@ throw new Error('TODO (geht das ueberhaupt?!??)');
 			{
 				switch(_color.toLowerCase())
 				{
+					case 'in':
+					case 'stdin':
+						_color = COLOR_STDIN;
+						break;
 					case 'high':
 						_color = COLOR_HIGH;
 						break;

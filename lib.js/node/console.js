@@ -353,6 +353,15 @@
 				break;
 		}
 
+		if(typeof prefix !== 'string')
+		{
+			prefix = '';
+		}
+		else
+		{
+			prefix = ansi.style.bold(prefix);
+		}
+
 		var consoleData = data.toText({ prefix });
 		var fileData;
 
@@ -2508,6 +2517,256 @@
 			encoding: _options.encoding,
 			close: true
 		}, _throw);
+	}
+
+	//
+	console.prompt = function(_callback, _options, _format, ... _printf)
+	{
+		if(typeof _callback !== 'function')
+		{
+			return x('Invalid % argument (not a %)', null, '_callback', 'Function');
+		}
+		else if(!Object.isObject(_options))
+		{
+			var eol = null;
+			
+			if(typeof _options === 'string')
+			{
+				_printf.unshift(_format);
+				_format = _options;
+			}
+			else if(typeof _options === 'boolean')
+			{
+				eol = _options;
+			}
+
+			_options = { callback: _callback };
+				
+			if(eol !== null)
+			{
+				_options.eol = eol;
+			}
+		}
+		
+		if(typeof _options.binary !== 'boolean')
+		{
+			_options.binary = false;
+		}
+		
+		if(typeof _options.visual !== 'boolean' && typeof _options.visual !== 'string')
+		{
+			_options.visual = true;
+		}
+		
+		if(typeof _options.eol !== 'boolean')
+		{
+			_options.eol = false;
+		}
+		
+		if((_options.question = String.printf(_format, ... _printf)).length === 0)
+		{
+			_options.question = '? ';
+		}
+		else if(_options.question[_options.question.length - 1] !== ' ')
+		{
+			_options.question += ' ';
+		}
+
+		if(typeof _options.prefix !== 'string')
+		{
+			_options.prefix = ansi.style.bold(ansi.color(COLOR_STDIN, false, (_options.eol ? PREFIX_STDOUT : PREFIX_STDIN)));
+		}
+		
+		if(typeof _options.prompt !== 'string')
+		{
+			_options.prompt = ansi.style.bold(ansi.color(COLOR_STDIN, false, PREFIX_STDIN));
+		}
+
+		if(! (isInt(_options.length) && _options.length > 0))
+		{
+			_options.length = Infinity;
+		}
+
+		if(Array.isArray(_options.until, false))
+		{
+			for(var i = 0; i < _options.until.length; ++i)
+			{
+				if(Number.isInt(_options.until[i]) && _options.until[i] >= 0 && _options.until[i] <= 255)
+				{
+					_options.until[i] = String.fromCharCode(_options.until[i]);
+				}
+				else if(! String.isString(_options.until[i], false))
+				{
+					_options.until.splice(i--, 1);
+				}
+			}
+			
+			if(_options.until.length === 0)
+			{
+				_options.until = [ '\n', '\r' ];
+			}
+		}
+		else if(Number.isInt(_options.until) && _options.until >= 0 && _options.until <= 255)
+		{
+			_options.until = [ String.fromCharCode(_options.until) ];
+		}
+		else if(String.isString(_options.until, false))
+		{
+			_options.until = [ _options.until ];
+		}
+		else
+		{
+			_options.until = [ '\n', '\r' ];
+		}
+
+		var query = (_options.prefix + _options.question);
+
+		process.stdout.write(query);
+
+		if(_options.eol)
+		{
+			process.stdout.write(EOL + _options.prompt);
+		}
+		
+		var result = '';
+		var real = '';
+		
+		const origRawMode = process.stdin.isRaw;
+		const stop = (_stop, _reason) => {
+			process.stdin.off('data', callback);
+			process.stdin.setRawMode(origRawMode);
+			process.stdin.pause();
+			
+			if(!result.endsWith('\n', '\r'))
+			{
+				process.stdout.write(EOL);
+			}
+			
+			return _callback(result, _stop, _reason);
+		};
+
+		const callback = (_data) => {
+			const byte = _data.charCodeAt(0);
+			const char = _data[0];
+			var add = '';
+
+			switch(byte)
+			{
+				case 3:
+					return stop(byte, 'sigint');
+				case 27:
+					return stop(byte, 'escape');
+				default:
+					if(_options.binary)
+					{
+						add = char;
+					}
+					else if(byte >= 32 && byte !== 127)
+					{
+						add = char;
+					}
+					break;
+			}
+
+			real += char;
+			
+			if(add.length > 0)
+			{
+				result += add;
+				
+				if(_options.visual === true)
+				{
+					process.stdout.write(add);
+				}
+				else if(typeof _options.visual === 'string')
+				{
+					process.stdout.write(_options.visual);
+				}
+			}
+			
+			if(Number.isFinite(_options.length) && result.length >= _options.length)
+			{
+				return stop(_options.length, 'length');
+			}
+			else for(var i = 0; i < _options.until.length; ++i)
+			{
+				if(real.endsWith(_options.until[i]))
+				{
+					return stop(_options.until[i], 'until[' + i + ']');
+				}
+			}
+		};
+
+		process.stdin.setRawMode(true);
+		process.stdin.on('data', callback);
+		process.stdin.resume();
+
+		return query;
+	}
+
+	console.confirm = function(_callback, _format, ... _printf)
+	{
+		if(typeof _callback !== 'function')
+		{
+			return x('Invalid % argument (not a %)', null, '_callback', 'Function');
+		}
+
+		var string = String.printf(_format, ... _printf);
+		const prefix = ansi.style.bold(ansi.color(COLOR_STDIN, false, PREFIX_STDIN));
+
+		if(string.length === 0)
+		{
+			string = '[yes/no]? ';
+		}
+		
+		const query = (prefix + string);
+		process.stdout.write(query);
+
+		const origRawMode = process.stdin.isRaw;
+		const stop = (_result, _break) => {
+			process.stdin.off('data', callback);
+			process.stdin.setRawMode(origRawMode);
+			process.stdin.pause();
+			process.stdout.write(EOL);
+			return _callback(_result, _break);
+		};
+
+		const callback = (_data) => {
+			const char = _data[0];
+			const byte = char.charCodeAt(0);
+
+			switch(byte)
+			{
+				case 3:
+					return stop(null, 'sigint');
+				case 27:
+					return stop(null, 'escape');
+				default:
+					if(byte < 32 || byte === 127)
+					{
+						return;
+					}
+					break;
+			}
+
+			switch(char.toLowerCase())
+			{
+				case 'n':
+				case '-':
+				case '0':
+					return stop(false, null);
+				case 'y':
+				case '+':
+				case '1':
+					return stop(true, null);
+			}
+		};
+
+		process.stdin.setRawMode(true);
+		process.stdin.on('data', callback);
+		process.stdin.resume();
+
+		return query;
 	}
 
 	//

@@ -2,9 +2,81 @@
 {
 
 	//
+	const DEFAULT_FUNC = true;
+	const DEFAULT_RAW = false;
+
+	//
 	if(typeof console === 'undefined')
 	{
 		console = require('+console');
+	}
+
+	//
+	console.stream = function(_id, _func = DEFAULT_FUNC, _raw = DEFAULT_RAW)
+	{
+		if(typeof _raw !== 'boolean')
+		{
+			_raw = DEFAULT_RAW;
+		}
+
+		if(typeof _func !== 'boolean')
+		{
+			_func = DEFAULT_FUNC;
+		}
+
+		if(typeof _id === 'string')
+		{
+			_id = _id.toLowerCase();
+		}
+		else if(! Number.isInt(_id))
+		{
+			return null;
+		}
+		
+		switch(_id)
+		{
+			case 0:
+			case 'stdin':
+				break;
+			case 1:
+			case 'stdout':
+				if(_func)
+				{
+					if(_raw)
+					{
+						return process.stdout.write;
+					}
+
+					return console.stdout;
+				}
+
+				return process.stdout;
+			case 2:
+			case 'stderr':
+				if(_func)
+				{
+					if(_raw)
+					{
+						return process.stderr.write;
+					}
+
+					return console.stderr;
+				}
+
+				return process.stderr;
+			case 'log':
+				return console.log;
+			case 'info':
+				return console.info;
+			case 'warn':
+				return console.warn;
+			case 'error':
+				return console.error;
+			case 'debug':
+				return console.debug;
+		}
+
+		return null;
 	}
 
 	//

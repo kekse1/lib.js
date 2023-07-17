@@ -10870,6 +10870,23 @@ throw new Error('TODO');
 	}});
 
 	//
+	Object.defineProperty(String.prototype, 'removeBinary', { value: function()
+	{
+		var result = '';
+		var byte;
+
+		for(var i = 0; i < this.length; ++i)
+		{
+			if((byte = this.charCodeAt(i)) >= 32 && byte !== 127)
+			{
+				result += this[i];
+			}
+		}
+
+		return result;
+	}});
+
+	//
 
 })();
 
