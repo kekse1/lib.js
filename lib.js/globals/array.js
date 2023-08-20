@@ -4098,9 +4098,14 @@ const SORT = false;
 	}});
 
 	//
+	Object.defineProperty(Array, 'uniq', { value: (_array) => {
+		if(Array.isArray(_array, true)) return x('Invalid % argument (not an %)', null, '_array', 'Array');
+		return Array.from(new Set(_array));
+	}});
+	
+	//
 
 })();
 
 //
 module.exports = Array;
-
