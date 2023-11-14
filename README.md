@@ -74,3 +74,4 @@ Here's a quick overview over them:
 The Copyright is [(c) Sebastian Kucharczyk](./COPYRIGHT.txt),
 and it's licensed under the [MIT](./LICENSE.txt) (also known as 'X' or 'X11' license).
 
+![kekse.biz](favicon.png)
