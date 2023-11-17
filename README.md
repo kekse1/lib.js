@@ -70,7 +70,7 @@ Here's a quick overview over them:
 * [TypedArray](lib.js/globals/typedarray.js)
 * [UInt8Array](lib.js/globals/uint8array.js)
 
-## Copyright and License
+# Copyright and License
 The Copyright is [(c) Sebastian Kucharczyk](./COPYRIGHT.txt),
 and it's licensed under the [MIT](./LICENSE.txt) (also known as 'X' or 'X11' license).
 
