@@ -1,16 +1,33 @@
 #
 # Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
+# https://kekse.biz/ https://github.com/kekse1/scripts/
+# v2.0.2
 #
-# Just copy this script to '/etc/profile.d/'.
+# Copy this script to '/etc/profile.d/prompt.sh'.
 #
 
 #
+_TERMUX=0
+_MULTI_LINE=0
 _SLASHES=4
 _REST_STRING="..."
-_WITH_DATE=0
-_DATE_FORMAT='%H:%M:%S (%j)'
+_WITH_FILES=1
 _WITH_HOSTNAME=1
 _WITH_USERNAME=1
+_WITH_LOAD_AVG=1
+_WITH_DATE=1
+_DATE_FORMAT_ONE='%H:%M:%S'
+_DATE_FORMAT_TWO='%j'
+
+#
+if [[ $_TERMUX -ne 0 ]]; then
+	_SLASHES=3
+	_WITH_DATE=0
+	_WITH_HOSTNAME=0
+	_WITH_USERNAME=0
+	_WITH_LOAD_AVG=0
+	#_WITH_FILES=0
+fi
 
 #
 ps1Prompt()
@@ -108,7 +125,9 @@ ps1Prompt()
 	PS1=""
 
 	#
-	write ' ➜ '
+	startFG 180 115 25
+	write ' » '
+	ansiReset
 	user_host=0
 
 	#
@@ -138,10 +157,39 @@ ps1Prompt()
 	[[ $user_host -ne 0 ]] && write ' '
 	
 	#
-	if [[ $_WITH_DATE -ne 0 && -n "$_DATE_FORMAT" ]]; then
-		write "`date +"$_DATE_FORMAT"` "
+	if [[ $_WITH_DATE -ne 0 && -n "$_DATE_FORMAT_ONE" ]]; then
+		startFG 110 200 255
+		write "`date +"$_DATE_FORMAT_ONE"` "
+		if [[ -n "$_DATE_FORMAT_TWO" ]]; then
+			startFG 210 140 30
+			write "`date +"$_DATE_FORMAT_TWO"` "
+		fi
+		ansiReset
+	fi
+	
+	#
+	if [[ $_WITH_LOAD_AVG -ne 0 && -r /proc/loadavg ]]; then
+		read one five fifteen rest </proc/loadavg
+		startFG 180 250 0
+		write "$one $five $fifteen "
+		ansiReset
 	fi
 
+	#
+	if [[ $_WITH_FILES -ne 0 ]]; then
+		#
+		startFG 190 60 250
+		write "`find -maxdepth 1 -type f -o -type l | wc -l`"
+		startFG 200 220 20
+		write '/'
+		startFG 250 60 180
+		write "$((`find -maxdepth 1 -type d | wc -l`-1)) "
+		ansiReset
+	fi
+	
+	#
+	[[ $_MULTI_LINE -ne 0 ]] && write "\n "
+	
 	#
 	if [[ $ret -eq 0 ]]; then
 		startBG 170 230 70
@@ -169,7 +217,7 @@ ps1Prompt()
 	write ' '
 	startBG 95 160 205
 	startFG 0 0 0
-	getBase $_SLASHES "$PWD"
+	getBase $_SLASHES "`pwd`"
 	ansiReset
 	write ' '
 
