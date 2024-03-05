@@ -1,11 +1,7 @@
 #
 # Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
 # https://kekse.biz/ https://github.com/kekse1/scripts/
-<<<<<<< HEAD
 # v2.0.2
-=======
-# v2.0.0
->>>>>>> b273ab40db0d9bd544184191032540245d753ce6
 #
 # Copy this script to '/etc/profile.d/prompt.sh'.
 #
@@ -30,10 +26,7 @@ if [[ $_TERMUX -ne 0 ]]; then
 	_WITH_HOSTNAME=0
 	_WITH_USERNAME=0
 	_WITH_LOAD_AVG=0
-<<<<<<< HEAD
 	#_WITH_FILES=0
-=======
->>>>>>> b273ab40db0d9bd544184191032540245d753ce6
 fi
 
 #
@@ -167,11 +160,7 @@ ps1Prompt()
 	if [[ $_WITH_DATE -ne 0 && -n "$_DATE_FORMAT_ONE" ]]; then
 		startFG 110 200 255
 		write "`date +"$_DATE_FORMAT_ONE"` "
-<<<<<<< HEAD
 		if [[ -n "$_DATE_FORMAT_TWO" ]]; then
-=======
-		if [[ ! -z "$_DATE_FORMAT_TWO" ]]; then
->>>>>>> b273ab40db0d9bd544184191032540245d753ce6
 			startFG 210 140 30
 			write "`date +"$_DATE_FORMAT_TWO"` "
 		fi
@@ -179,11 +168,7 @@ ps1Prompt()
 	fi
 	
 	#
-<<<<<<< HEAD
 	if [[ $_WITH_LOAD_AVG -ne 0 && -r /proc/loadavg ]]; then
-=======
-	if [[ $_WITH_LOAD_AVG -ne 0 ]]; then
->>>>>>> b273ab40db0d9bd544184191032540245d753ce6
 		read one five fifteen rest </proc/loadavg
 		startFG 180 250 0
 		write "$one $five $fifteen "
@@ -198,11 +183,7 @@ ps1Prompt()
 		startFG 200 220 20
 		write '/'
 		startFG 250 60 180
-<<<<<<< HEAD
 		write "$((`find -maxdepth 1 -type d | wc -l`-1)) "
-=======
-		write "`find -maxdepth 1 -type d | wc -l` "
->>>>>>> b273ab40db0d9bd544184191032540245d753ce6
 		ansiReset
 	fi
 	
