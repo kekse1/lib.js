@@ -4,7 +4,7 @@ The official website is [libjs.de](https://libjs.de/).
 The current version can be seen in the [`version.json`](version.json).
 
 # **Abandon**ware..
-**Just for your info**: this library was a nice test project (so I've some code to really work on),
+**Just for your info**: this library **was** a nice **test project** (so I've some code to really work on),
 but since my [newest **private** website project](https://kekse.biz/) uses my new [**v4**](https://github.com/kekse1/v4/)
 library code, which is quiet optimized and better (even though not **that** far developed..), **this project has ended**!
 
