@@ -1,4 +1,4 @@
-<img src="https://kekse.biz/github.php?draw&override=github:lib.js&text=`lib[rary].js`&draw" />
+![https://kekse.biz/github.php?draw&override=github:lib.js](lib.js)
 
 The official website is [libjs.de](https://libjs.de/).
 The current version can be seen in the [`version.json`](version.json).
