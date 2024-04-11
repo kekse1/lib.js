@@ -1,9 +1,29 @@
 #!/usr/bin/env bash
 
-# todo #
 #
-# # timer (how long, and maybe `time`?)
-# # netcut (get @ $dl)
+# Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
+# https://kekse.biz/ https://github.com/kekse1/scripts/
+# v0.3.0
+#
+# JFYI: This is a really old design, so I'm not sure
+# whether everything is really "fine" and "correct",
+# or most "efficient", etc.. BUT IT WORX for me. ^_^
+#
+# AND you should know: we're using a symbolic link
+# '/opt/node.js/0' by default (to a directory named
+# by the real Node.js version). AND it's still up to
+# you to create symlinks below '/usr/*' - mostly the
+# `bin/node`, etc.. BUT this is only necessary ONE
+# TIME: every future update (via this script) will
+# *add* the newer version and replace the '0'-link,
+# which should be the target of all your links in
+# the '/usr' hierarchy! ;-)
+#
+# TODO #
+#
+# # use `getopt`; and also --help/-h, etc..!!
+# # timer (how long to compile, etc.?);
+# # better design, etc..!
 #
 
 #for termux:
@@ -76,7 +96,7 @@ fi
 [[ -n "$os" ]] && termux_args="$termux_args --dest-os=$os"
 [[ -n "$cpu" ]] && termux_args="$termux_args --dest-cpu=$cpu"
 
-termux_args="$termux_args --shared-cares --shared-openssl --shared-zlib " #--with-intl=system-icu"
+termux_args="$termux_args --shared-cares --shared-openssl --shared-zlib" #--with-intl=system-icu
 
 #
 if [[ -z "$version" ]]; then
@@ -102,21 +122,22 @@ if [[ "$termux" = "yes" ]]; then
 
 	target="/data/data/com.termux/files/usr/${target}/"
 	tmpdir="/data/data/com.termux/files/home/${tmpdir}/"
-
-	if [[ ! -d "$tmpdir" ]]; then
-		if [[ -e "$tmpdir" ]]; then
-			echo " >> Temporary directory is not a directory." >&2
-			exit 16
-		else
-			mkdir -pv "$tmpdir"
-		fi
-	fi
 else
 	flags="$flags -march=$march"
+fi
 
-	if [[ `id -u` -ne 0 ]]; then
-		echo " >> You need to be the 'root' superuser to do this.." >&2
-		exit 4
+if [[ `id -u` -ne 0 ]]; then
+	echo " >> You need to be the 'root' superuser to do this.." >&2
+	exit 4
+fi
+
+#
+if [[ ! -d "$tmpdir" ]]; then
+	if [[ -e "$tmpdir" ]]; then
+		echo " >> Temporary directory is not a directory." >&2
+		exit 16
+	else
+		mkdir -pv "$tmpdir"
 	fi
 fi
 
@@ -294,11 +315,11 @@ mergeSymlinks()
 	echo '(TODO: mergeSymlinks())' >&2
 }
 
-prepare()
+start()
 {
 	tmpdir="$(realpath "$tmpdir")"
 	target="$(realpath "$target")"
-
+	cd "$tmpdir"
 	infos
 }
 
@@ -331,14 +352,14 @@ infos()
 		[[ -n "$cpu" ]] && printf "%16s: %s\n" "CPU" "$cpu"
 	fi
 	echo
+	printf "%16s: '%s'\n" "Temp directory" "$tmpdir"
 	printf "%16s: '%s'\n" "Target" "$target"
+	printf "%16s: '%s'\n" "Downloader" "$dl"
+	echo
 	printf "%16s: '%s'\n" "Arguments" "$args"
 	echo
 	printf "%16s: '%s'\n" "FLAGS" "$CFLAGS"
 	printf "%16s: '%s'\n" "MAKEFLAGS" "$MAKEFLAGS"
-	echo
-	printf "%16s: '%s'\n" "TEMP Directory" "$tmpdir"
-	printf "%16s: '%s'\n" "Downloader" "$dl"
 	echo
 
 	really
@@ -347,25 +368,22 @@ infos()
 
 begin()
 {
-	#
 	echo
 
-	#
 	download
-
-	#
 	build
-
-	#
 	cleanup
-
-	#
 	check
 }
 
 cleanup()
 {
-	rm -rf "$tmpdir"
+	rm -vrf "$tmpdir"
+
+	if [[ $? -ne 0 ]]; then
+	  echo " >> Unable to remove the '$tmpdir'! Maybe a process is in there?" >&2
+	  echo " >> So please remove this directory manually afterwards.." >&2
+	fi
 }
 
 check()
@@ -383,5 +401,6 @@ check()
 }
 
 #
-prepare
+start
 
+#
