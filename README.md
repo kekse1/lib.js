@@ -76,6 +76,9 @@ Here's a quick overview over them:
 * [TypedArray](lib.js/globals/typedarray.js)
 * [UInt8Array](lib.js/globals/uint8array.js)
 
+# Contact
+<img src="https://kekse.biz/github.php?override=github:lib.js&draw&text=lib.js@kekse.biz&angle=6&size=38pt&fg=150,20,90&font=OpenSans&ro&readonly&h=64&v=16" />
+
 # Copyright and License
 The Copyright is [(c) Sebastian Kucharczyk](./COPYRIGHT.txt),
 and it's licensed under the [MIT](./LICENSE.txt) (also known as 'X' or 'X11' license).
