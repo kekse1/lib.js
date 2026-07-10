@@ -76,8 +76,12 @@ Here's a quick overview over them:
 * [TypedArray](lib.js/globals/typedarray.js)
 * [UInt8Array](lib.js/globals/uint8array.js)
 
+<br><br><br>
+
 # Contact
 <img src="https://kekse.biz/github.php?override=github:lib.js&draw&text=lib.js@kekse.biz&angle=6&size=38pt&fg=150,20,90&font=OpenSans&ro&readonly&h=64&v=16" />
+
+<br>
 
 # Copyright and License
 The Copyright is [(c) Sebastian Kucharczyk](./COPYRIGHT.txt),
